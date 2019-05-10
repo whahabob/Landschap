@@ -308,34 +308,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapWidth: 100
   mapHeight: 100
-  octaves: 3
-  seed: 23
-  noiseScale: 36.61
-  persistance: 0.5
-  lacuanrity: 2
+  octaves: 2
+  seed: 0
+  noiseScale: 26.7
+  persistance: 0.36
+  lacuanrity: 1.9
   offset: {x: 0, y: 0}
   regions:
   - name: Water
     heightValue: 0.3
-    colour: {r: 0, g: 0, b: 0, a: 0}
-  - name: 
-    heightValue: 0
-    colour: {r: 0, g: 0, b: 0, a: 0}
-  - name: 
-    heightValue: 0
-    colour: {r: 0, g: 0, b: 0, a: 0}
-  - name: 
-    heightValue: 0
-    colour: {r: 0, g: 0, b: 0, a: 0}
-  - name: 
-    heightValue: 0
-    colour: {r: 0, g: 0, b: 0, a: 0}
-  - name: 
-    heightValue: 0
-    colour: {r: 0, g: 0, b: 0, a: 0}
-  - name: 
-    heightValue: 0
-    colour: {r: 0, g: 0, b: 0, a: 0}
+    colour: {r: 0.13416697, g: 0.1627513, b: 0.6320754, a: 0}
+  - name: Sand
+    heightValue: 0.4
+    colour: {r: 0.845358, g: 0.9056604, b: 0.2691349, a: 0}
+  - name: Grass
+    heightValue: 0.5
+    colour: {r: 0, g: 0.6037736, b: 0.07523202, a: 0}
+  - name: Rock1
+    heightValue: 0.65
+    colour: {r: 0.06514774, g: 0.0754717, b: 0.06642148, a: 0}
+  - name: Rock2
+    heightValue: 0.95
+    colour: {r: 0.029725859, g: 0.03773582, b: 0.0307141, a: 0}
+  - name: Snow
+    heightValue: 1
+    colour: {r: 1, g: 1, b: 1, a: 0}
 --- !u!4 &242522155
 Transform:
   m_ObjectHideFlags: 0

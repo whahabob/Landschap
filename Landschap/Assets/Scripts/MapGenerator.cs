@@ -42,8 +42,8 @@ public class MapGenerator : MonoBehaviour {
         }
 
 
-                MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-        mapDisplay.DrawNoiseMap(noiseMap); 
+        MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
+        mapDisplay.DrawTexture(TextureGenerator.TextureFromColourMap(colourMap,mapWidth,mapHeight)); 
         
     }
 	
