@@ -11,11 +11,17 @@ public static class Noise {
         System.Random r = new System.Random(seed);
         Vector2[] octavesOffset = new Vector2[octaves];
 
+        float maxPossibleHeight = 0;
+        float amplitude = 1;
+        float frequencie = 1;
         for(int i = 0; i < octaves; i++)
         {
             float octavesOffsetX = r.Next(-100000, 100000) + offset.x;
-            float octavesOffsetY = r.Next(-100000, 100000) + offset.y;
+            float octavesOffsetY = r.Next(-100000, 100000) - offset.y;
             octavesOffset[i] = new Vector2(octavesOffsetX, octavesOffsetY);
+
+            maxPossibleHeight += amplitude;
+            amplitude *= persistance;
         }
         float[,] noiseMap = new float[mapWidth,mapHeight];
 
@@ -33,15 +39,15 @@ public static class Noise {
         {
             for(int x = 0; x < mapWidth; x++)
             {
-                float amplitude = 1;
-                float frequencie = 1;
+                amplitude = 1;
+                frequencie = 1;
                 float noiseHeight = 0;
 
 
                 for(int i = 0; i < octaves; i++)
                 {
-                    float sampleX = (x - centerWidth) / scale * frequencie + octavesOffset[i].x;
-                    float sampleY = (y - centerHeight) / scale * frequencie + octavesOffset[i].y;
+                    float sampleX = (x - centerWidth + octavesOffset[i].x) / scale * frequencie;
+                    float sampleY = (y - centerHeight + octavesOffset[i].y) / scale * frequencie;
 
                     float perlinValue = Mathf.PerlinNoise(sampleX, sampleY) * 2 - 1;
                     noiseHeight += perlinValue * amplitude;
@@ -64,11 +70,12 @@ public static class Noise {
         {
             for (int x = 0; x < mapWidth; x++)
             {
-                noiseMap[x, y] = Mathf.InverseLerp(minHeight, maxHeight, noiseMap[x, y]);
+               // noiseMap[x, y] = Mathf.InverseLerp(minHeight, maxHeight, noiseMap[x, y]);
+               float normalizedHeight = (noiseMap[x,y] + 1) /(maxPossibleHeight);
+                noiseMap[x,y] = Mathf.Clamp(normalizedHeight, 0 , 1);
             }
         }
-
-
-                return noiseMap;
+        
+        return noiseMap;
     }
 }
