@@ -30,7 +30,7 @@ public class EndlessTerrain : MonoBehaviour {
 	}
 	void Update()
 	{
-		viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
+		viewerPosition = new Vector2(viewer.position.x, viewer.position.z) / mapGen.terrainData.uniformScale;
 
 		if((viewerPositionOld-viewerPosition).sqrMagnitude > sqrViewerMoveThresholdForChunkUpdate)
 		{
@@ -96,8 +96,8 @@ public class EndlessTerrain : MonoBehaviour {
 			meshFilter = meshObject.AddComponent<MeshFilter>();
 			meshRenderer.material = material;
 			
-			meshObject.transform.position = positionV3;
-			//meshObject.transform.localScale = Vector3.one * size / 10f;
+			meshObject.transform.position = positionV3 * mapGen.terrainData.uniformScale;
+			meshObject.transform.localScale = Vector3.one * mapGen.terrainData.uniformScale;
 			meshObject.transform.parent = parent;
 			SetVisible(false);
 			lodMeshes = new LODMesh[detailLevels.Length];
@@ -112,8 +112,7 @@ public class EndlessTerrain : MonoBehaviour {
 			this.mapData = mapData;
 			mapDataReceived = true;
 
-			Texture2D texture = TextureGenerator.TextureFromColourMap(mapData.colourMap, MapGenerator.mapChunkSize,MapGenerator.mapChunkSize);
-			meshRenderer.material.mainTexture = texture;
+		
 			UpdateTerrain();
 		}
 		void OnMeshDataReceived(MeshData meshData)
