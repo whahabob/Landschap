@@ -22,11 +22,12 @@ public class TextureData : UpdatableData {
 		material.SetFloatArray ("baseColourStrength", layers.Select(x => x.tintStrength).ToArray());
 		material.SetFloatArray ("baseTextureScales", layers.Select(x => x.textureScale).ToArray());
 		Texture2DArray texturesArray = GenerateTextureArray (layers.Select (x => x.texture).ToArray ());
+       
 		material.SetTexture ("baseTextures", texturesArray);
 
 		UpdateMeshHeights (material, savedMinHeight, savedMaxHeight);
 	}
-
+	
 	public void UpdateMeshHeights(Material material, float minHeight, float maxHeight) {
 		savedMinHeight = minHeight;
 		savedMaxHeight = maxHeight;
@@ -55,6 +56,7 @@ public class TextureData : UpdatableData {
 		[Range(0,1)]
 		public float blendStrength;
 		public float textureScale;
+        
 	}
 		
 	 

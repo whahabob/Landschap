@@ -13,4 +13,20 @@ public class NoiseData : UpdatableData {
     public float persistance;
     public float lacuanrity;
     public Vector2 offset;
+
+    #if UNITY_EDITOR
+
+    protected override void OnValidate()
+    {
+        if(lacuanrity < 1)
+        {
+            lacuanrity = 1;
+        }
+        if(octaves < 0)
+        {
+            octaves = 1;
+        }
+        base.OnValidate();
+    }
+    #endif
 }

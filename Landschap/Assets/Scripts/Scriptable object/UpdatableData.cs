@@ -6,6 +6,8 @@ public class UpdatableData : ScriptableObject {
 
     public event System.Action OnValuesUpdated;
 
+    #if UNITY_EDITOR
+
     protected virtual void OnValidate()
     {
         UnityEditor.EditorApplication.update += NotifyOfUpdatedValues;
@@ -20,5 +22,7 @@ public class UpdatableData : ScriptableObject {
             OnValuesUpdated();
         }
     }
+
+    #endif
 
 }

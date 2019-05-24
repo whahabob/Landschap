@@ -22,6 +22,7 @@ public class MapGenerator : MonoBehaviour {
 
     void Start()
     {
+        textureData.ApplyToMaterial(terrainMaterial);
         textureData.UpdateMeshHeights(terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
         GenerateMapData(Vector2.zero);
         
