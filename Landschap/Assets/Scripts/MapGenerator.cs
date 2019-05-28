@@ -59,6 +59,7 @@ public class MapGenerator : MonoBehaviour {
         
     }
     public void RequestMeshData(MapData mapData,int lod, Action<MeshData> callback) {
+        
         ThreadStart threadStart = delegate 
             {
                 MeshDataThread(mapData, lod, callback);
@@ -68,10 +69,11 @@ public class MapGenerator : MonoBehaviour {
     void MeshDataThread(MapData mapData, int lod, Action<MeshData> callback)
     {
         MeshData meshData = MeshGenerator.GenerateTerrain(mapData.heightMap, terrainData.meshHeightMultiplier, terrainData.meshHeightCurve, lod);
-        lock(meshDataThreadInfoQueue)
-        {
-            meshDataThreadInfoQueue.Enqueue(new MapThreadInfo<MeshData>(callback, meshData));
-        }
+        
+            lock(meshDataThreadInfoQueue)
+            {
+                meshDataThreadInfoQueue.Enqueue(new MapThreadInfo<MeshData>(callback, meshData));
+            }
     }
     
     void Update()

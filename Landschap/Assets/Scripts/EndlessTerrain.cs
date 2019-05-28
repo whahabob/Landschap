@@ -146,6 +146,7 @@ public class EndlessTerrain : MonoBehaviour {
 		}
 		void OnMeshDataReceived(MeshData meshData)
 		{
+			 
 			meshFilter.mesh = meshData.CreateMesh();
 		}
 
@@ -246,6 +247,8 @@ public class EndlessTerrain : MonoBehaviour {
 		}
 		void OnMeshDataReceived(MeshData meshData)
 		{
+             
+           
 			mesh = meshData.CreateMesh();
 			hasMesh = true;
 			updateCallback();

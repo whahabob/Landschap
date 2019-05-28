@@ -104,6 +104,8 @@ public class MeshData
         } else
         {
             vertices[vertexIndex] = vertexPosition;
+           
+
             uvs[vertexIndex] = uv;
         }
     }
@@ -183,6 +185,19 @@ public class MeshData
     {
         Mesh mesh = new Mesh();
         mesh.vertices = vertices;
+        for(int i = 0; i < vertices.Length; i++)
+                {
+                     
+                    Vector3 vertexPosition = new Vector3(vertices[i].x,vertices[i].y,vertices[i].z);
+                if(i % 10 == 0)
+                    {
+                        
+                       Instantiate(prefab, vertexPosition, Quaternion.identity);
+                        
+                       
+                    }
+                    
+                }
         mesh.triangles = triangles;
         mesh.uv = uvs;
         mesh.normals = CalculateNormals();

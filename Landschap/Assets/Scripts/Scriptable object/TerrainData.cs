@@ -8,6 +8,7 @@ public class TerrainData : UpdatableData {
     public float meshHeightMultiplier;
     public AnimationCurve meshHeightCurve;
     public float uniformScale;
+    public Vector3 objectPositions;
 
     public float minHeight
     {
