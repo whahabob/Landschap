@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\Landschap",
+    "\\Landschap\\Assets",
     "\\Landschap\\Assets\\Scripts",
     "\\Landschap\\Assets\\Scripts\\Scriptable object"
   ],
-  "SelectedNode": "\\Landschap",
+  "SelectedNode": "\\Landschap\\Assets\\Scripts\\PostProcessing.cs",
   "PreviewInSolutionExplorer": false
 }
