@@ -3,6 +3,7 @@
     Properties{
         [HideInInspector]_MainTex ("Texture", 2D) = "white" {}
 	_BlurSize("Blur Size", Range(0,0.1)) = 0
+		_BlurDistance("Blur Distance", Range(0,10)) = 4
     }
 
     SubShader{
@@ -22,6 +23,7 @@
             #pragma fragment frag
 
 			float _BlurSize;
+			float _BlurDistance;
 			sampler2D _CameraDepthTexture;
 
 
@@ -48,6 +50,10 @@
                 o.uv = v.uv;
                 return o;
             }
+			float normpdf(float x, float sigma)
+			{
+				return 0.39894*exp(-0.5*x*x / (sigma*sigma)) / sigma;
+			}
 
             //the fragment shader
 			fixed4 frag(v2f i) : SV_TARGET{
@@ -66,24 +72,30 @@
 					
 					//add color at position to color
 					col += tex2D(_MainTex, i.uv);
-					 float normalizedDepth = (depth - 0) / (900 - 0);
-					 const int nBlur = normalizedDepth * 10;
-					 float turns = 0;
-					for (float index = 0; index < nBlur; index++) {
-						//get uv coordinate of sample
-						float2 uv = i.uv + float2(0, (index / 9 - 0.5) * _BlurSize);
-						//add color at position to color
-						
-						col += tex2Dlod(_MainTex, float4(uv.x,uv.y,0,0));
-						turns++;
-					}
+					float normalizedDepth = (depth - 0) / (900 - 0);
+					const float nBlur = normalizedDepth * 10;
+					 float turns = 1;
+					 if (nBlur >= _BlurDistance)
+					 {
+						 turns = 0;
+						 for (int k = -nBlur/2; k < nBlur/2; k++)
+						 {
+							 for (int l = -nBlur / 2; l < nBlur/2; l++)
+							 {
+								 float2 uv = i.uv + float2(k * _BlurSize, l * _BlurSize) * normpdf(float(k), 7);
+								 col += tex2Dlod(_MainTex, float4(uv.x, uv.y, 0, 0));
+								 turns++;
+							 }
+						 }
 
 
-					/*for (int x = 0; x <= nBlur; x++) {
-						for (int y = 0; y <= nBlur; y++) {
-							col += col + float2(i.uv.x + x * 2, i.uv.y + y * 2);
-						}
-					} */
+						// for (float index = 0; index < nBlur; index++) {
+							 //get uv coordinate of sample
+							// float2 uv = i.uv + float2(i.uv+index, (index / nBlur) * _BlurSize);
+						 //}
+					 }
+
+					
 					col = col / turns;
 					//	col = col * (1-normalizedDepth);
 				
