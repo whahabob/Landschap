@@ -7,13 +7,16 @@ public class EndlessTerrain : MonoBehaviour {
 	const float viewerMoveThresholdForChunkUpdate = 25f;
 	const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
 	const float colliderGenerationDistanceThreshold = 5;
+
+
     public int colliderLODIndex;
     public LODInfo[] detailLevels;
 	public static float maxViewDst;
+
 	public Transform viewer;
 	public Material mapMaterial;
-	public static Vector2 viewerPosition;
-	Vector2 viewerPositionOld;
+	public static Vector3 viewerPosition;
+	Vector3 viewerPositionOld;
 	static MapGenerator mapGen;
 
 	Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
@@ -29,10 +32,11 @@ public class EndlessTerrain : MonoBehaviour {
 		chunkSize = MapGenerator.mapChunkSize -1;
 		chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst/ chunkSize);
 		UpdateVisibleChunks();
+        viewerPositionOld = viewer.position;
 	}
 	void Update()
 	{
-		viewerPosition = new Vector2(viewer.position.x, viewer.position.z) / mapGen.terrainData.uniformScale;
+		viewerPosition = new Vector3(viewer.position.x, viewer.position.y,viewer.position.z) / mapGen.terrainData.uniformScale;
 
         if(viewerPosition != viewerPositionOld)
         {
@@ -56,7 +60,8 @@ public class EndlessTerrain : MonoBehaviour {
 		for(int i = 0; i < terrainChunkVisibleLastUpdate.Count; i++)
 		{
             alreadyUpdatedChunkCoords.Add (terrainChunkVisibleLastUpdate [i].coord);
-			terrainChunkVisibleLastUpdate[i].SetVisible(false);
+            
+			terrainChunkVisibleLastUpdate[i].UpdateTerrain();
 		}
 		//terrainChunkVisibleLastUpdate.Clear();
 
@@ -67,9 +72,6 @@ public class EndlessTerrain : MonoBehaviour {
 		{
 			for(int xOffset = -chunksVisibleInViewDst; xOffset <= chunksVisibleInViewDst; xOffset++)
 			{
-
-
-
 				Vector2 viewedChunkCoord = new Vector2(currentChunkCoordX+xOffset, currentChunkCoordY+yOffset);
 				if (!alreadyUpdatedChunkCoords.Contains (viewedChunkCoord)) {
 					if (terrainChunkDictionary.ContainsKey (viewedChunkCoord)) {
@@ -180,7 +182,7 @@ public class EndlessTerrain : MonoBehaviour {
 						{
 							previousLODIndex = lodIndex;
 							meshFilter.mesh = lodMesh.mesh;
-							meshCollider.sharedMesh = lodMesh.mesh; 
+							//meshCollider.sharedMesh = lodMesh.mesh; 
 						}
 						else if(!lodMesh.hasRequestedMesh)
 						{
