@@ -9,6 +9,7 @@ public class TerrainData : UpdatableData {
     public AnimationCurve meshHeightCurve;
     public float uniformScale;
     public Vector3 objectPositions;
+    public GameObject prefab;
 
     public float minHeight
     {
@@ -22,5 +23,11 @@ public class TerrainData : UpdatableData {
         get{
             return uniformScale * meshHeightMultiplier * meshHeightCurve.Evaluate(1);
         }
+    }
+    public void generateObjects(Vector3 position)
+    {
+       
+            Instantiate(prefab, position, Quaternion.identity);
+        
     }
 }
