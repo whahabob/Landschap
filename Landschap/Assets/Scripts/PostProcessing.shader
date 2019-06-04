@@ -65,41 +65,26 @@
 				depth = Linear01Depth(depth);
 				depth = depth * _ProjectionParams.z;
 				fixed4 source = tex2D(_MainTex, i.uv);
-               // source +=  (0,1,0,1);
-                //source += depth;
-				//if (depth >= _ProjectionParams.z)
-					//return source;
+              
 				float4 col = 0;
-				
-					
-					//add color at position to color
-					col += tex2D(_MainTex, i.uv);
-					float normalizedDepth = (depth - 0) / (900 - 0);
-					const float nBlur = normalizedDepth * 10;
-					 float turns = 1;
-					 if (nBlur >= _BlurDistance)
-					 {
-						 turns = 0;
-						 for (int k = -nBlur/2; k < nBlur/2; k++)
-						 {
-							 for (int l = -nBlur / 2; l < nBlur/2; l++)
-							 {
-								 float2 uv = i.uv + float2(k * _BlurSize, l * _BlurSize) * normpdf(float(k), _BlurAmplitude);
-								 col += tex2Dlod(_MainTex, float4(uv.x, uv.y, 0, 0));
-								 turns++;
-							 }
-						 }
-
-
-						// for (float index = 0; index < nBlur; index++) {
-							 //get uv coordinate of sample
-							// float2 uv = i.uv + float2(i.uv+index, (index / nBlur) * _BlurSize);
-						 //}
-					 }
-
-					
-					col = col / turns;
-					//	col = col * (1-normalizedDepth);
+				col += tex2D(_MainTex, i.uv);
+				float normalizedDepth = (depth - 0) / (900 - 0);
+				const float nBlur = normalizedDepth * 10;
+					float turns = 1;
+					if (nBlur >= _BlurDistance)
+					{
+						turns = 0;
+						for (int k = -nBlur/2; k < nBlur/2; k++)
+						{
+							for (int l = -nBlur / 2; l < nBlur/2; l++)
+							{
+								float2 uv = i.uv + float2(k * _BlurSize, l * _BlurSize) * normpdf(float(k), _BlurAmplitude);
+								col += tex2Dlod(_MainTex, float4(uv.x, uv.y, 0, 0));
+								turns++;
+							}
+						}
+					}
+				col = col / turns;
 				
 				 
 

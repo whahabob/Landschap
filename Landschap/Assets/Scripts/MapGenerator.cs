@@ -76,6 +76,14 @@ public class MapGenerator : MonoBehaviour {
     
     void Update()
     {
+         if(meshDataThreadInfoQueue.Count > 0)
+        {
+            for(int i = 0; i < meshDataThreadInfoQueue.Count; i++)
+            {
+                MapThreadInfo<MeshData> threadInfo = meshDataThreadInfoQueue.Dequeue();
+                threadInfo.callback(threadInfo.parameter);
+            }
+        }
         if(mapDataThreadInfoQueue.Count > 0)
         {
             for(int i = 0; i < mapDataThreadInfoQueue.Count; i++)
@@ -85,14 +93,7 @@ public class MapGenerator : MonoBehaviour {
             }
         }
 
-         if(meshDataThreadInfoQueue.Count > 0)
-        {
-            for(int i = 0; i < meshDataThreadInfoQueue.Count; i++)
-            {
-                MapThreadInfo<MeshData> threadInfo = meshDataThreadInfoQueue.Dequeue();
-                threadInfo.callback(threadInfo.parameter);
-            }
-        }
+        
     }
 
     private void OnValidate()

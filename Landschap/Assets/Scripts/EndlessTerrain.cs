@@ -6,7 +6,7 @@ public class EndlessTerrain : MonoBehaviour {
 
 	const float viewerMoveThresholdForChunkUpdate = 25f;
 	const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
-	const float colliderGenerationDistanceThreshold = 5;
+	const float colliderGenerationDistanceThreshold = 25;
 
 
     public int colliderLODIndex;
@@ -57,7 +57,7 @@ public class EndlessTerrain : MonoBehaviour {
 	void UpdateVisibleChunks()
 	{
         HashSet<Vector2> alreadyUpdatedChunkCoords = new HashSet<Vector2> ();
-		for(int i = 0; i < terrainChunkVisibleLastUpdate.Count; i++)
+		for(int i = terrainChunkVisibleLastUpdate.Count-1; i >= 0; i--)
 		{
             alreadyUpdatedChunkCoords.Add (terrainChunkVisibleLastUpdate [i].coord);
             
