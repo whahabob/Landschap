@@ -4,6 +4,7 @@
         [HideInInspector]_MainTex ("Texture", 2D) = "white" {}
 	_BlurSize("Blur Size", Range(0,0.1)) = 0
 		_BlurDistance("Blur Distance", Range(0,10)) = 4
+		_BlurAmplitude("Blur amplitude", Range(0,15))= 7
     }
 
     SubShader{
@@ -24,6 +25,7 @@
 
 			float _BlurSize;
 			float _BlurDistance;
+			float _BlurAmplitude;
 			sampler2D _CameraDepthTexture;
 
 
@@ -82,7 +84,7 @@
 						 {
 							 for (int l = -nBlur / 2; l < nBlur/2; l++)
 							 {
-								 float2 uv = i.uv + float2(k * _BlurSize, l * _BlurSize) * normpdf(float(k), 7);
+								 float2 uv = i.uv + float2(k * _BlurSize, l * _BlurSize) * normpdf(float(k), _BlurAmplitude);
 								 col += tex2Dlod(_MainTex, float4(uv.x, uv.y, 0, 0));
 								 turns++;
 							 }

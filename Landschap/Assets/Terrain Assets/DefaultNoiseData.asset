@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   octaves: 5
   seed: 0
-  noiseScale: 85
-  persistance: 0.35
-  lacuanrity: 2.1
+  noiseScale: 175
+  persistance: 0.37
+  lacuanrity: 2.75
   offset: {x: 0, y: 0}
